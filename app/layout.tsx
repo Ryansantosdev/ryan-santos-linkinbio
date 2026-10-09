@@ -1,16 +1,24 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Bricolage_Grotesque, JetBrains_Mono, VT323 } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
-import "./globals.css";
+import "./keyboard.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const display = Bricolage_Grotesque({
+  variable: "--font-display",
   subsets: ["latin"],
+  weight: ["600", "800"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const mono = JetBrains_Mono({
+  variable: "--font-mono",
   subsets: ["latin"],
+  weight: ["500", "700"],
+});
+
+const pixel = VT323({
+  variable: "--font-pixel",
+  subsets: ["latin"],
+  weight: "400",
 });
 
 export const metadata: Metadata = {
@@ -24,8 +32,12 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0B1013",
+  themeColor: "#EEF4FB",
+  viewportFit: "cover",
 };
+
+// Pula a abertura se já foi vista nesta sessão (roda antes da página aparecer)
+const introGate = `try{if(sessionStorage.getItem('rs-intro')||matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.setAttribute('data-seen','')}catch(e){}`;
 
 export default function RootLayout({
   children,
@@ -33,10 +45,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="pt-BR" className="dark">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+    <html lang="pt-BR" className={`${display.variable} ${mono.variable} ${pixel.variable}`} suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: introGate }} />
+        <noscript>
+          <style>{`#intro{display:none!important}`}</style>
+        </noscript>
+      </head>
+      <body suppressHydrationWarning>
         {children}
         <Analytics />
       </body>
