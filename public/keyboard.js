@@ -140,7 +140,7 @@ $('#resetBtn')?.addEventListener('click',()=>{taps=0;store.set('rs-sig',0);count
 /* ---------- knob (RGB) ---------- */
 const MODES=[['ARCO-ÍRIS',null],['AZUL',212],['CIANO',188],['MENTA',152],['ÂMBAR',40],['CORAL',12],['ROSA',325],['ROXO',268],['DESLIGADO','off']];
 const STEP=360/MODES.length,ring=$('#ring'),dial=$('#dial'),knob=$('#knob');
-const dots=MODES.map((m,i)=>{const d=document.createElement('i');const a=i*STEP*Math.PI/180;d.style.transform=`translate(${Math.sin(a)*34}px,${-Math.cos(a)*34}px)`;ring.appendChild(d);return d;});
+const dots=MODES.map((m,i)=>{const d=document.createElement('i');const a=i*STEP*Math.PI/180;d.style.left=(50+Math.sin(a)*61)+'%';d.style.top=(50-Math.cos(a)*61)+'%';ring.appendChild(d);return d;});
 let mode=0,steps=0;
 function setMode(i,quiet){
   mode=(i%MODES.length+MODES.length)%MODES.length;const [n,h]=MODES[mode];
@@ -247,5 +247,26 @@ intro.addEventListener('pointerdown',e=>{e.preventDefault();startIntro();});
 intro.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();startIntro();}});
 $('#replayBtn')?.addEventListener('click',showIntro);
 
+/* ---------- encaixe numa tela só ---------- */
+function fit(){
+  const H=Math.round(window.visualViewport?window.visualViewport.height:innerHeight);
+  document.documentElement.style.setProperty('--vh',H+'px');
+  if(innerWidth>700){rig.style.width='';document.documentElement.classList.remove('onescreen');return;}
+  const root=document.documentElement;root.classList.remove('compact');
+  const last=()=>root.classList.contains('compact')?$('.hint'):$('footer');
+  const usedNow=()=>last().getBoundingClientRect().bottom-$('.head').getBoundingClientRect().top+28;
+  for(let pass=0;pass<2;pass++){
+  if(pass===1){if(usedNow()<=H)break;root.classList.add('compact');}
+  rig.style.width='';
+  let w0=rig.offsetWidth,u0=usedNow(),k=1.3;
+  for(let i=0;i<4&&u0>H;i++){
+    const w1=Math.max(240,Math.floor(w0-(u0-H)/k-1));if(w1===w0)break;rig.style.width=w1+'px';
+    const u1=usedNow();if(w0!==w1&&u0!==u1)k=Math.max(.8,(u0-u1)/(w0-w1));w0=w1;u0=u1;
+  }
+  }
+  root.classList.toggle('onescreen',usedNow()<=H+1);
+}
+fit();addEventListener('resize',fit);window.visualViewport&&visualViewport.addEventListener('resize',fit);
+document.fonts&&document.fonts.ready.then(fit);addEventListener('load',fit);
 let seen=false;try{seen=!!sessionStorage.getItem('rs-intro')}catch(e){}
 if(!reduce&&!seen)showIntro();else{intro.hidden=true;tour();}
