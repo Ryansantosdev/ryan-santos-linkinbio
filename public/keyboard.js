@@ -65,8 +65,10 @@ document.addEventListener('mouseleave',()=>setTilt(0,0));
 const VT=(oledEl.dataset.title||'').toUpperCase();
 const MQ='◂ TOQUE NA RESINA  ▸  '+(VT?'ÚLTIMO VÍDEO: '+VT:'ÚLTIMO VÍDEO NO AR')+'  ▸  APERTE ESPAÇO  ▸  @RYANSANTOSDG  ▸  ';
 let oledT;
-function oled(msg,ms){clearTimeout(oledT);const l=$('#oled1');if(msg){l.textContent=msg;if(ms)oledT=setTimeout(()=>oled(),ms);}else{l.innerHTML=`<span class="mq">${MQ}${MQ}</span>`;}}
-function oledLong(msg,ms){clearTimeout(oledT);const l=$('#oled1');l.innerHTML=`<span class="mq" style="animation-duration:9s">${msg}   ${msg}   </span>`;oledT=setTimeout(()=>oled(),ms);}
+let idleT,idleI=0;
+function idle(){const l=$('#oled1'),msgs=['◂ TOQUE AQUI',greeting(),'@RYANSANTOSDG'];l.textContent=msgs[idleI%msgs.length];idleT=setInterval(()=>{idleI++;l.textContent=msgs[idleI%msgs.length];},4000);}
+function oled(msg,ms){clearTimeout(oledT);clearInterval(idleT);const l=$('#oled1');if(msg){l.textContent=msg;if(ms)oledT=setTimeout(()=>oled(),ms);}else idle();}
+function oledLong(msg,ms){clearTimeout(oledT);clearInterval(idleT);const l=$('#oled1');l.innerHTML=`<span class="mq" style="animation-duration:9s">${msg}   ${msg}   </span>`;oledT=setTimeout(()=>oled(),ms);}
 function clock(){const d=new Date();$('#clock').textContent=String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');}
 function greeting(){const h=new Date().getHours();return h>=5&&h<12?'BOM DIA ✦':h>=12&&h<18?'BOA TARDE ✦':'BOA NOITE ✦';}
 clock();setInterval(clock,20000);oled();
@@ -205,7 +207,7 @@ function resetIntro(){timers.forEach(clearTimeout);timers=[];intro.getAnimations
   allKeys.forEach(k=>k.getAnimations().forEach(a=>a.cancel()));['#crackB','#crackW'].forEach(s=>$(s).setAttribute('d',''));$('#start').classList.remove('down');cursor.hidden=true;
   $('#cableMove').getAnimations().forEach(a=>a.cancel());}
 function done(){try{sessionStorage.setItem('rs-intro','1')}catch(e){}
-  oled(greeting(),1800);if(isIOS)setTimeout(()=>oled('♪ SEM SOM? TIRE DO SILENCIOSO',2400),1900);}
+  oled(greeting(),1800);let w=1900;if(isIOS){setTimeout(()=>oled('♪ SEM SOM? TIRE DO SILENCIOSO',2400),w);w+=2500;}if(VT)setTimeout(()=>oledLong('ÚLTIMO VÍDEO: '+VT,9000),w);}
 function finish(){resetIntro();intro.hidden=true;playing=false;powered(true);done();}
 function showIntro(){resetIntro();intro.hidden=false;playing=false;setTilt(0,0);powered(false);$('#oled1').textContent='';}
 function powerOn(){

@@ -1,9 +1,6 @@
 // Markup do teclado (portado do protótipo). Valores dinâmicos: último vídeo.
 export function keyboardMarkup({ href, title, isNew }: { href: string; title: string; isNew: boolean }) {
   return `<div id="app">
-  <div class="proto">
-    <button id="modeBtn" class="tgl" type="button" role="switch" aria-checked="false" aria-label="Modo noturno"><i></i><span class="s">☀</span><span class="m">☾</span></button>
-  </div>
 
   <header class="head">
     <div class="ph"><img src="/perfil.webp" alt="Foto de Ryan Santos"></div>
@@ -11,6 +8,7 @@ export function keyboardMarkup({ href, title, isNew }: { href: string; title: st
       <h1>Ryan <mark>Santos</mark></h1>
       <div class="handle">@ryansantosdg ✓</div>
     </div>
+    <button id="modeBtn" class="tgl" type="button" role="switch" aria-checked="false" aria-label="Modo noturno"><i></i><span class="s">☀</span><span class="m">☾</span></button>
   </header>
   <p class="bio">Ouça o silêncio da mente. É de lá que vem o verdadeiro crescimento.</p>
 
