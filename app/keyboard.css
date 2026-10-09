@@ -23,8 +23,17 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
 #app{max-width:410px;min-height:100dvh;margin:0 auto;padding-inline:16px;padding-block:16px 32px;display:flex;flex-direction:column;justify-content:center;gap:16px;transform-origin:50% 45%}
 
 .proto{display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-size:10px;letter-spacing:.08em;text-transform:uppercase}
-/* chave dia/noite ao lado do nome */
-.head .tgl{margin-left:auto;align-self:flex-start}
+/* chave dia/noite + rever abertura ao lado do nome */
+.head .tools{margin-left:auto;align-self:flex-start;display:flex;flex-direction:column;align-items:flex-end;gap:6px}
+.who{flex:1}
+.rbtn{width:30px;height:30px;border:2px solid var(--ink);border-radius:50%;background:var(--card);box-shadow:2px 2px 0 var(--hard);font-size:15px;font-weight:700;line-height:1;flex:none}
+.rbtn:active,.tgl:active{transform:translate(2px,2px);box-shadow:none}
+/* dicas: bolhas na 1ª visita + frase que alterna */
+.bubble{position:absolute;z-index:8;padding:4px 8px;border:2px solid #111;border-radius:8px;background:#FFE39A;color:#111;box-shadow:2px 2px 0 #111;font:700 11px/1.2 var(--mono);white-space:nowrap;pointer-events:none;opacity:0}
+#bResin{left:6px;top:-30px}
+#bKnob{right:-2px;top:-30px}
+#bCable{right:58px;top:-62px}
+#tip{display:inline-block;transition:opacity .25s}
 .proto .tag{padding:4px 8px;border:2px solid var(--ink);border-radius:999px;font-weight:700}
 .proto button{padding:4px 10px;border:2px solid var(--ink);border-radius:999px;background:var(--card);font-weight:700;box-shadow:2px 2px 0 var(--hard)}
 .proto button:active{transform:translate(2px,2px);box-shadow:none}

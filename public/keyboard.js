@@ -206,10 +206,14 @@ function powered(on){allKeys.forEach(k=>k.classList.toggle('off',!on));oledEl.cl
 function resetIntro(){timers.forEach(clearTimeout);timers=[];intro.getAnimations({subtree:true}).forEach(a=>a.cancel());app.getAnimations().forEach(a=>a.cancel());
   allKeys.forEach(k=>k.getAnimations().forEach(a=>a.cancel()));['#crackB','#crackW'].forEach(s=>$(s).setAttribute('d',''));$('#start').classList.remove('down');cursor.hidden=true;
   $('#cableMove').getAnimations().forEach(a=>a.cancel());}
-function done(){try{sessionStorage.setItem('rs-intro','1')}catch(e){}
+function tour(){let seenTour=false;try{seenTour=!!localStorage.getItem('rs-tour');localStorage.setItem('rs-tour','1')}catch(e){}if(seenTour)return;
+  ['#bResin','#bKnob','#bCable'].forEach((s,i)=>setTimeout(()=>$(s).animate([{opacity:0,transform:'translateY(6px) scale(.9)'},{opacity:1,transform:'none',offset:.12},{opacity:1,transform:'none',offset:.85},{opacity:0,transform:'translateY(-4px)'}],{duration:2300,easing:'ease-out'}),900+i*2100));}
+const TIPS=['<b>Toque</b> na tecla de resina','<b>Gire</b> o botão para mudar a luz','<b>Toque</b> no cabo','<b>50 toques</b> na resina revelam um segredo'];let tipI=0;
+setInterval(()=>{const t=$('#tip');if(!t)return;t.style.opacity=0;setTimeout(()=>{tipI=(tipI+1)%TIPS.length;t.innerHTML=TIPS[tipI];t.style.opacity=1;},250);},3800);
+function done(){tour();try{sessionStorage.setItem('rs-intro','1')}catch(e){}
   oled(greeting(),1800);let w=1900;if(isIOS){setTimeout(()=>oled('♪ SEM SOM? TIRE DO SILENCIOSO',2400),w);w+=2500;}if(VT)setTimeout(()=>oledLong('ÚLTIMO VÍDEO: '+VT,9000),w);}
 function finish(){resetIntro();intro.hidden=true;playing=false;powered(true);done();}
-function showIntro(){resetIntro();intro.hidden=false;playing=false;setTilt(0,0);powered(false);$('#oled1').textContent='';}
+function showIntro(){document.documentElement.removeAttribute('data-seen');resetIntro();intro.hidden=false;playing=false;setTilt(0,0);powered(false);$('#oled1').textContent='';}
 function powerOn(){
   intro.animate([{opacity:1},{opacity:0}],{duration:440,fill:'forwards'});
   app.animate([{transform:'scale(1.3)',filter:'blur(8px)'},{transform:'scale(1)',filter:'blur(0)'}],{duration:560,easing:'cubic-bezier(.2,.8,.2,1)'});
@@ -244,4 +248,4 @@ intro.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventD
 $('#replayBtn')?.addEventListener('click',showIntro);
 
 let seen=false;try{seen=!!sessionStorage.getItem('rs-intro')}catch(e){}
-if(!reduce&&!seen)showIntro();else{intro.hidden=true;}
+if(!reduce&&!seen)showIntro();else{intro.hidden=true;tour();}

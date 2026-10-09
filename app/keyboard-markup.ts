@@ -8,7 +8,7 @@ export function keyboardMarkup({ href, title, isNew }: { href: string; title: st
       <h1>Ryan <mark>Santos</mark></h1>
       <div class="handle">@ryansantosdg ✓</div>
     </div>
-    <button id="modeBtn" class="tgl" type="button" role="switch" aria-checked="false" aria-label="Modo noturno"><i></i><span class="s">☀</span><span class="m">☾</span></button>
+    <div class="tools"><button id="modeBtn" class="tgl" type="button" role="switch" aria-checked="false" aria-label="Modo noturno"><i></i><span class="s">☀</span><span class="m">☾</span></button><button id="replayBtn" class="rbtn" type="button" aria-label="Rever abertura" title="Rever abertura">↺</button></div>
   </header>
   <p class="bio">Ouça o silêncio da mente. É de lá que vem o verdadeiro crescimento.</p>
 
@@ -36,6 +36,7 @@ export function keyboardMarkup({ href, title, isNew }: { href: string; title: st
       </g>
     </svg>
 
+    <span class="bubble" id="bResin">toque aqui ▾</span><span class="bubble" id="bKnob">gire pra mudar a luz ▾</span><span class="bubble" id="bCable">toque no cabo ▸</span>
     <section class="case" aria-label="Links">
       <i class="pwr on" id="pwr"></i>
       <div class="topbar">
@@ -89,7 +90,7 @@ export function keyboardMarkup({ href, title, isNew }: { href: string; title: st
     </section>
   </div>
 
-  <p class="hint"><b>Toque</b> na tecla de resina
+  <p class="hint"><span id="tip"><b>Toque</b> na tecla de resina</span>
     <span class="desk-only">Atalhos: <kbd>Y</kbd><kbd>I</kbd><kbd>T</kbd><kbd>L</kbd><kbd>ESPAÇO</kbd> · gire o botão</span></p>
   <footer>© 2026 Ryan Santos</footer>
 </div>
