@@ -16,7 +16,7 @@ body.gold{--hard:#D9A520}
 *{box-sizing:border-box}
 [hidden]{display:none!important}
 html,body{min-height:100%;overflow-x:hidden;overflow-x:clip}
-body{position:relative}
+body{position:relative;margin:0}
 body{background:var(--bg) radial-gradient(var(--dot) 1.2px,transparent 1.3px) 0 0/18px 18px;color:var(--ink);font-family:var(--mono);
   transition:background-color .2s,color .2s;-webkit-tap-highlight-color:transparent;overflow-x:hidden}
 button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
@@ -26,7 +26,7 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
 /* chave dia/noite + rever abertura ao lado do nome */
 .head .tools{margin-left:auto;align-self:flex-start;display:flex;flex-direction:column;align-items:flex-end;gap:6px}
 .who{flex:1}
-.rbtn{width:30px;height:30px;border:2px solid var(--ink);border-radius:50%;background:var(--card);box-shadow:2px 2px 0 var(--hard);font-size:15px;font-weight:700;line-height:1;flex:none}
+.rbtn{height:26px;padding:0 9px;border:2px solid var(--ink);border-radius:999px;background:var(--card);box-shadow:2px 2px 0 var(--hard);font:700 10px/1 var(--mono);letter-spacing:.04em;white-space:nowrap;flex:none}
 .rbtn:active,.tgl:active{transform:translate(2px,2px);box-shadow:none}
 /* dicas: bolhas na 1ª visita + frase que alterna */
 .bubble{position:absolute;z-index:8;padding:4px 8px;border:2px solid #111;border-radius:8px;background:#FFE39A;color:#111;box-shadow:2px 2px 0 #111;font:700 11px/1.2 var(--mono);white-space:nowrap;pointer-events:none;opacity:0}
@@ -74,10 +74,10 @@ body.night .rig[data-rgb=rainbow] .desk{animation:hd 8s linear infinite}
 .oled::after{content:"";position:absolute;inset:0;background:linear-gradient(160deg,rgba(255,255,255,.13),transparent 38%);pointer-events:none}
 .oled.dark>*{visibility:hidden}
 body.gold .oled{color:#FFD58A;text-shadow:0 0 6px rgba(255,190,80,.8)}
-.o1{font-size:6.2cqw;line-height:1;white-space:nowrap;overflow:hidden}
+.o1{font-size:14cqw;line-height:1;white-space:nowrap;overflow:hidden}
 .o1 .mq{display:inline-block;animation:mq 16s linear infinite}
 @keyframes mq{to{transform:translateX(-50%)}}
-.o2{display:flex;justify-content:space-between;gap:6px;white-space:nowrap;font-size:4.2cqw;line-height:1;margin-top:1.4cqw;opacity:.75}
+.o2{display:flex;justify-content:space-between;gap:6px;white-space:nowrap;font-size:9.5cqw;line-height:1;margin-top:3cqw;opacity:.75}
 
 .knobwrap{position:relative;width:16.5cqw;height:16.5cqw;flex:none;margin:0 1.2cqw}
 .ring{position:absolute;inset:0;pointer-events:none}
@@ -225,6 +225,7 @@ html:not(.kb-ready) #intro{animation:introFail 0s 6s forwards}
 @container (max-width:175px){#clock{display:none}}
 /* celular: página travada numa tela só (o JS encaixa o teclado na altura visível) */
 html.onescreen,html.onescreen body{height:100%;overflow:hidden;overscroll-behavior:none}
+html.onescreen #app{height:var(--vh);min-height:0;overflow:hidden}
 html.compact .bio,html.compact footer{display:none}
 html.compact .ph{width:56px;height:56px}
 html.compact .rig{margin-top:14px}

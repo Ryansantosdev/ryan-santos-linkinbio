@@ -8,7 +8,7 @@ export function keyboardMarkup({ href, title, isNew }: { href: string; title: st
       <h1>Ryan <mark>Santos</mark></h1>
       <div class="handle">@ryansantosdg ✓</div>
     </div>
-    <div class="tools"><button id="modeBtn" class="tgl" type="button" role="switch" aria-checked="false" aria-label="Modo noturno"><i></i><span class="s">☀</span><span class="m">☾</span></button><button id="replayBtn" class="rbtn" type="button" aria-label="Rever abertura" title="Rever abertura">↺</button></div>
+    <div class="tools"><button id="modeBtn" class="tgl" type="button" role="switch" aria-checked="false" aria-label="Modo noturno"><i></i><span class="s">☀</span><span class="m">☾</span></button><button id="replayBtn" class="rbtn" type="button" title="Rever abertura">↺ Abertura</button></div>
   </header>
   <p class="bio">Ouça o silêncio da mente. É de lá que vem o verdadeiro crescimento.</p>
 

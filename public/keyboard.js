@@ -66,9 +66,10 @@ const VT=(oledEl.dataset.title||'').toUpperCase();
 const MQ='◂ TOQUE NA RESINA  ▸  '+(VT?'ÚLTIMO VÍDEO: '+VT:'ÚLTIMO VÍDEO NO AR')+'  ▸  APERTE ESPAÇO  ▸  @RYANSANTOSDG  ▸  ';
 let oledT;
 let idleT,idleI=0;
-function idle(){const l=$('#oled1'),msgs=['◂ TOQUE AQUI',greeting(),'@RYANSANTOSDG'];l.textContent=msgs[idleI%msgs.length];idleT=setInterval(()=>{idleI++;l.textContent=msgs[idleI%msgs.length];},4000);}
-function oled(msg,ms){clearTimeout(oledT);clearInterval(idleT);const l=$('#oled1');if(msg){l.textContent=msg;if(ms)oledT=setTimeout(()=>oled(),ms);}else idle();}
-function oledLong(msg,ms){clearTimeout(oledT);clearInterval(idleT);const l=$('#oled1');l.innerHTML=`<span class="mq" style="animation-duration:9s">${msg}   ${msg}   </span>`;oledT=setTimeout(()=>oled(),ms);}
+function idle(){const l=$('#oled1'),msgs=['◂ TOQUE AQUI',greeting(),'@RYANSANTOSDG'];l.textContent=msgs[idleI%msgs.length];fitText(l);idleT=setInterval(()=>{idleI++;l.textContent=msgs[idleI%msgs.length];fitText(l);},4000);}
+function fitText(l){l.style.fontSize='';const r=l.clientWidth/l.scrollWidth;if(r<1)l.style.fontSize=(parseFloat(getComputedStyle(l).fontSize)*r*.97)+'px';return r;}
+function oled(msg,ms){clearTimeout(oledT);clearInterval(idleT);const l=$('#oled1');if(msg){l.textContent=msg;if(fitText(l)<.62){oledLong(msg,ms||6000);return;}if(ms)oledT=setTimeout(()=>oled(),ms);}else idle();}
+function oledLong(msg,ms){clearTimeout(oledT);clearInterval(idleT);const l=$('#oled1');l.style.fontSize='';l.innerHTML=`<span class="mq" style="animation-duration:9s">${msg}   ${msg}   </span>`;oledT=setTimeout(()=>oled(),ms);}
 function clock(){const d=new Date();$('#clock').textContent=String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');}
 function greeting(){const h=new Date().getHours();return h>=5&&h<12?'BOM DIA ✦':h>=12&&h<18?'BOA TARDE ✦':'BOA NOITE ✦';}
 clock();setInterval(clock,20000);oled();
@@ -264,7 +265,7 @@ function fit(){
     const u1=usedNow();if(w0!==w1&&u0!==u1)k=Math.max(.8,(u0-u1)/(w0-w1));w0=w1;u0=u1;
   }
   }
-  root.classList.toggle('onescreen',usedNow()<=H+1);
+  root.classList.add('onescreen');
 }
 fit();addEventListener('resize',fit);window.visualViewport&&visualViewport.addEventListener('resize',fit);
 document.fonts&&document.fonts.ready.then(fit);addEventListener('load',fit);
